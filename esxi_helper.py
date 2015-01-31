@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
-from fabric.api import *
+import fabric.api as fbapi
 
-env.host_string = 'esx01.xs4n1.nl'
-env.shell = "/bin/sh -l -c"
+fbapi.env.host_string = 'esx01.xs4n1.nl'
+fbapi.env.shell = "/bin/sh -l -c"
 for c in ['status', 'running', 'stdout']:
-    output[c] = False
+    fbapi.output[c] = False
 
 
 class VirtualMachines(object):
     def __init__(self):
-        self._cmd = run("vim-cmd vmsvc/getallvms")
+        self._cmd = fbapi.run("vim-cmd vmsvc/getallvms")
         # Split header from "getallvms" into keys
         keys = self._cmd.splitlines()[0].lower().split()
         # ['vmid', 'name', 'file', 'guest', 'os', 'version', 'annotation']
