@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import unittest
-import json
 from esxi_helper import VirtualMachines
 
 class VirtualMachinesTest(unittest.TestCase):
