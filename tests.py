@@ -23,7 +23,7 @@ class VirtualMachinesTest(unittest.TestCase):
             self.assertRegexpMatches(self.vms.get_storage(vm_name), '\w+', msg=vm_name)
             self.assertEqual(self.vms.get_vm_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
                             self.vms.get_storage(vm_name),
-                            self.vms.get_file(vm_name).split('/')[0]),
+                            self.vms.get_directory(vm_name)),
                     msg=vm_name)
 
 if __name__ == '__main__':
