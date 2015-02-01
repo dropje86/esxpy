@@ -15,12 +15,6 @@ class VirtualMachinesTest(unittest.TestCase):
 
         self.vms = VirtualMachines(self.vm_list)
 
-    def test_list_vms(self):
-        print self.vms.list_vms()
-
-    def test_vm_list_normalized(self):
-        for line in self.vms.vm_list_normalized: print line
-
     def test_inventory(self):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_file(vm_name), '^[\w\/\.]+\.vmx$', msg=vm_name)
