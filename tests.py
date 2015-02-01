@@ -18,9 +18,14 @@ class VirtualMachinesTest(unittest.TestCase):
     def test_list_vms(self):
         print self.vms.list_vms()
 
-    def test_name_to_id(self):
-        name = 'dc.xs4n1.nl'
-        self.assertEqual(self.vms.name_to_id(name), '5')
+    def test_vm_list_normalized(self):
+        for line in self.vms.vm_list_normalized: print line
+
+    def test_inventory(self):
+        for vm_name in self.vms.inventory.iterkeys():
+            self.assertRegexpMatches(self.vms.get_file(vm_name), '^[\w\/\.]+\.vmx$', msg=vm_name)
+            self.assertRegexpMatches(self.vms.get_version(vm_name), '^vmx-\d{2}$', msg=vm_name)
+            self.assertRegexpMatches(self.vms.name_to_id(vm_name), '^\d+$', msg=vm_name)
 
 if __name__ == '__main__':
     unittest.main()
