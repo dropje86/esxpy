@@ -21,7 +21,10 @@ class VirtualMachinesTest(unittest.TestCase):
             self.assertRegexpMatches(self.vms.get_version(vm_name), '^vmx-\d{2}$', msg=vm_name)
             self.assertRegexpMatches(self.vms.name_to_id(vm_name), '^\d+$', msg=vm_name)
             self.assertRegexpMatches(self.vms.get_storage(vm_name), '\[\w+\]', msg=vm_name)
+            self.assertEqual(self.vms.get_vm_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
+                            self.vms.inventory[vm_name]['storage'].strip(']['),
+                            self.vms.inventory[vm_name]['file'].split('/')[0]),
+                    msg=vm_name)
 
 if __name__ == '__main__':
     unittest.main()
-

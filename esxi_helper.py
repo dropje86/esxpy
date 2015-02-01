@@ -33,12 +33,10 @@ class VirtualMachines(object):
         return self.inventory[name]['vmid']
 
     def get_vm_path(self, name):
-        storage_alias = self.inventory[name]['storage']
-        for i in ['[', ']']:
-            storage_alias = storage_alias.replace(i, '')
-        return '/vmfs/volumes/{0}/{1}'.format(
-                storage_alias,
-                self.inventory[name]['file'].split('/')[0])
+        storage_alias = self.inventory[name]['storage'].strip('][')
+        # Need to check file (vmx) path as VM name could be inaccurate due to renames
+        vm_dir = self.inventory[name]['file'].split('/')[0]
+        return '/vmfs/volumes/{0}/{1}'.format(storage_alias, vm_dir)
 
     def get_version(self, name):
         return self.inventory[name]['version']
