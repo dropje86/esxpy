@@ -45,3 +45,6 @@ class VirtualMachines(object):
 
     def get_file(self, name):
         return self.inventory[name]['file']
+
+    def get_storage(self, name):
+        return self.inventory[name]['storage']
