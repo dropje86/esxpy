@@ -45,4 +45,4 @@ class VirtualMachines(object):
         return self.inventory[name]['file']
 
     def get_storage(self, name):
-        return self.inventory[name]['storage']
+        return self.inventory[name]['storage'].strip('][')
