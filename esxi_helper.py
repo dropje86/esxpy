@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+from collections import defaultdict
+import json
 
 class VirtualMachines(object):
     def __init__(self, vm_list):
@@ -19,19 +20,17 @@ class VirtualMachines(object):
         self.inventory = self._build_inventory(attribute_names, vm_list_normalized)
 
     def _build_inventory(self, attribute_names, vm_list_normalized):
-        inventory = []
+        inventory = defaultdict(dict)
         for metadata in [ zip(attribute_names, attributes.split()) for attributes in vm_list_normalized ]:
-            inventory.append({ name:attribute for name, attribute in metadata })
+            # use use vm name -> metadata[1][1] as the key
+            inventory[metadata[1][1]] = { name:attribute for name, attribute in metadata }
         return inventory
 
     def list_vms(self):
-        vm_names = {}
-        for vm in self.inventory:
-            vm_names[vm['name']] = vm
-        return vm_names
+        return json.dumps(self.inventory, indent=4)
 
     def name_to_id(self, name):
-        return self.list_vms()[name]['vmid']
+        return self.inventory[name]['vmid']
 
     def get_vm_path(self, name):
         pass
