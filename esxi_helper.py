@@ -5,19 +5,19 @@ class VirtualMachines(object):
     def __init__(self, vm_list):
         self.vm_list = vm_list
         # Split header from "getvm_list" into keys
-        attribute_names = self.vm_list.splitlines()[0].lower().split()
+        self.attribute_names = self.vm_list.splitlines()[0].lower().split()
         # ['vmid', 'name', 'file', 'guest', 'os', 'version', 'annotation']
         #
         # Join 'guest' and 'os' attributes
-        attribute_names.insert(3, attribute_names.pop(3) + attribute_names.pop(3))
+        self.attribute_names.insert(3, self.attribute_names.pop(3) + self.attribute_names.pop(3))
         # ['vmid', 'name', 'file', 'guestos', 'version', 'annotation']
         #
         # Insert 'storage' key to refer to type of storage VM is located on
-        attribute_names.insert(2, 'storage')
+        self.attribute_names.insert(2, 'storage')
         # ['vmid', 'name', 'storage', 'file', 'guestos', 'version', 'annotation']
-        vm_list_normalized = self.vm_list.splitlines()[1:]
+        self.vm_list_normalized = self.vm_list.splitlines()[1:]
 
-        self.inventory = self._build_inventory(attribute_names, vm_list_normalized)
+        self.inventory = self._build_inventory(self.attribute_names, self.vm_list_normalized)
 
     def _build_inventory(self, attribute_names, vm_list_normalized):
         inventory = defaultdict(dict)
