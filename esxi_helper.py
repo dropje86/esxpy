@@ -33,7 +33,12 @@ class VirtualMachines(object):
         return self.inventory[name]['vmid']
 
     def get_vm_path(self, name):
-        pass
+        storage_alias = self.inventory[name]['storage']
+        for i in ['[', ']']:
+            storage_alias = storage_alias.replace(i, '')
+        return '/vmfs/volumes/{0}/{1}'.format(
+                storage_alias,
+                self.inventory[name]['file'].split('/')[0])
 
     def get_version(self, name):
         return self.inventory[name]['version']
