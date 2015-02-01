@@ -34,3 +34,9 @@ class VirtualMachines(object):
 
     def get_vm_path(self, name):
         pass
+
+    def get_version(self, name):
+        return self.inventory[name]['version']
+
+    def get_file(self, name):
+        return self.inventory[name]['file']
