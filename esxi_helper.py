@@ -3,10 +3,10 @@ import json
 
 class VirtualMachines(object):
     def __init__(self, vm_list):
-        self.vm_list = vm_list
+        self.vm_list            = vm_list
         self.vm_list_normalized = self.vm_list.splitlines()[1:]
-        self.headers = self._build_headers()
-        self.inventory = self._build_inventory()
+        self.headers            = self._build_headers()
+        self.inventory          = self._build_inventory()
 
     def _build_headers(self):
         headers = self.vm_list.splitlines()[0].lower().split()
