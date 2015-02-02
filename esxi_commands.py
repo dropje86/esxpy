@@ -1,5 +1,4 @@
 import fabric.api as fbapi
-import sys
 
 
 class ESXiCommands(object):
