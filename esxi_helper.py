@@ -39,8 +39,22 @@ class VirtualMachines(object):
     def get_file(self, name):
         return self.inventory[name]['file']
 
+    def get_vmx_name(self, name):
+        return self.get_file(name).split('/')[1]
+
+    def get_vmx_path(self, name):
+        path = self.get_vm_path(name)
+        vmx_name = self.get_vmx_name(name)
+        return path + '/' + vmx_name
+
     def get_directory(self, name):
         return self.inventory[name]['file'].split('/')[0]
 
     def get_storage(self, name):
         return self.inventory[name]['storage'].strip('][')
+
+    def get_vmdks(self, name):
+        import esxi_commands
+        cmd = esxi_commands.ESXiCommands()
+        vmx = self.get_vmx_path(name)
+        return cmd.get_vmdks(vmx)

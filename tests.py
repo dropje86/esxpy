@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 import unittest
+from mock import Mock
+from esxi_commands import ESXiCommands
+
+vmdk_raw  = 'scsi0:0.fileName = "dc.xs4n1.nl_2.vmdk"\r\n'
+vmdk_raw += 'ide0:0.fileName = "dc.xs4n1.nl_1.vmdk"'
+ESXiCommands._run = Mock(return_value=vmdk_raw)
+
 from esxi_helper import VirtualMachines
 
 vm_list  = "Vmid         Name                               File                               Guest OS          Version   Annotation\r\n"
@@ -25,10 +32,17 @@ class VirtualMachinesTest(unittest.TestCase):
             self.assertRegexpMatches(self.vms.get_version(vm_name), '^vmx-\d{2}$', msg=vm_name)
             self.assertRegexpMatches(self.vms.name_to_id(vm_name), '^\d+$', msg=vm_name)
             self.assertRegexpMatches(self.vms.get_storage(vm_name), '\w+', msg=vm_name)
+            self.assertRegexpMatches(self.vms.get_vmx_name(vm_name), '^\w(|.)+\.vmx$', msg=vm_name)
             self.assertEqual(self.vms.get_vm_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
                             self.vms.get_storage(vm_name),
                             self.vms.get_directory(vm_name)),
                     msg=vm_name)
+            self.assertEqual(self.vms.get_vmx_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
+                            self.vms.get_storage(vm_name),
+                            self.vms.get_file(vm_name)),
+                    msg=vm_name)
+            self.assertIsInstance(self.vms.get_vmdks(vm_name), list, msg=vm_name)
+
 
 if __name__ == '__main__':
     unittest.main()
