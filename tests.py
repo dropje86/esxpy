@@ -15,6 +15,10 @@ class VirtualMachinesTest(unittest.TestCase):
     def setUp(self):
         self.vms = VirtualMachines(vm_list)
 
+    def test_headers(self):
+        self.assertEqual(self.vms.headers,
+                ['vmid', 'name', 'storage', 'file', 'guestos', 'version', 'annotation'])
+
     def test_inventory(self):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_file(vm_name), '^[\w\/\.]+\.vmx$', msg=vm_name)
