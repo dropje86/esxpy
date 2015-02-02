@@ -10,9 +10,7 @@ class VirtualMachines(object):
 
     def _build_headers(self):
         headers = self.vm_list.splitlines()[0].lower().split()
-        guest   = headers.pop(3)
-        os      = headers.pop(3)
-        headers.insert(3, guest + os)
+        headers.remove('guest')
         headers.insert(2, 'storage')
         return headers
 

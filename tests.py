@@ -17,7 +17,7 @@ class VirtualMachinesTest(unittest.TestCase):
 
     def test_headers(self):
         self.assertEqual(self.vms.headers,
-                ['vmid', 'name', 'storage', 'file', 'guestos', 'version', 'annotation'])
+                ['vmid', 'name', 'storage', 'file', 'os', 'version', 'annotation'])
 
     def test_inventory(self):
         for vm_name in self.vms.inventory.iterkeys():
