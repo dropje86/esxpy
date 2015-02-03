@@ -26,23 +26,43 @@ class VirtualMachinesTest(unittest.TestCase):
         self.assertEqual(self.vms.headers,
                 ['vmid', 'name', 'storage', 'file', 'os', 'version', 'annotation'])
 
-    def test_inventory(self):
+    def test_get_file(self):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_file(vm_name), '^[\w\/\.]+\.vmx$', msg=vm_name)
+
+    def test_get_version(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_version(vm_name), '^vmx-\d{2}$', msg=vm_name)
+
+    def test_name_to_id(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.name_to_id(vm_name), '^\d+$', msg=vm_name)
+
+    def test_get_storage(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_storage(vm_name), '\w+', msg=vm_name)
+
+    def test_get_vmx_name(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.get_vmx_name(vm_name), '^\w(|.)+\.vmx$', msg=vm_name)
+
+    def test_get_vm_path(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertEqual(self.vms.get_vm_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
                             self.vms.get_storage(vm_name),
                             self.vms.get_directory(vm_name)),
                     msg=vm_name)
+
+    def test_get_vmx_path(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertEqual(self.vms.get_vmx_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
                             self.vms.get_storage(vm_name),
                             self.vms.get_file(vm_name)),
                     msg=vm_name)
+    
+    def test_get_vmdks(self):
+        for vm_name in self.vms.inventory.iterkeys():
             self.assertIsInstance(self.vms.get_vmdks(vm_name), list, msg=vm_name)
-
 
 if __name__ == '__main__':
     unittest.main()
