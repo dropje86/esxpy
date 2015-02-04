@@ -54,7 +54,7 @@ class VirtualMachines(object):
         return self.inventory[name]['storage'].strip('][')
 
     def get_vmdks(self, name):
-        import esxi_commands
-        cmd = esxi_commands.ESXiCommands()
+        import esxi.commands
+        cmd = esxi.commands.ESXiCommands()
         vmx = self.get_vmx_path(name)
         return cmd.get_vmdks(vmx)

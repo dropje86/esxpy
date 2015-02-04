@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import unittest
 from mock import Mock
-from esxi_commands import ESXiCommands
+from esxi.commands import ESXiCommands
 
 vmdk_raw  = 'scsi0:0.fileName = "dc.xs4n1.nl_2.vmdk"\r\n'
 vmdk_raw += 'ide0:0.fileName = "dc.xs4n1.nl_1.vmdk"'
 ESXiCommands._run = Mock(return_value=vmdk_raw)
 
-from esxi_helper import VirtualMachines
+from esxi.inventory import VirtualMachines
 
 vm_list  = "Vmid         Name                               File                               Guest OS          Version   Annotation\r\n"
 vm_list += "1      reverse.xs4n1.nl   [storage1] reverse.xs4n1.nl/reverse.xs4n1.nl.vmx   other26xLinux64Guest    vmx-07\r\n"
