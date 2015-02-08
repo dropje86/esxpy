@@ -13,7 +13,6 @@ class ESXiCommands(object):
     def _run(self, cmd):
         return fbapi.run(cmd)
 
-    def get_vmdks(self, vmxpath):
-        cmd = "egrep '\\.vmdk\"$' {0}".format(vmxpath)
-        raw_data = self._run(cmd)
-        return [ vmdk.split('"')[1] for vmdk in raw_data.splitlines() ]
+    def raw_vmdk_output(self, vmx):
+        cmd = "egrep '\\.vmdk\"$' {0}".format(vmx)
+        return self._run(cmd)

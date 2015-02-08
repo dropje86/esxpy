@@ -38,9 +38,9 @@ class VirtualMachinesTest(unittest.TestCase):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertRegexpMatches(self.vms.name_to_id(vm_name), '^\d+$', msg=vm_name)
 
-    def test_get_storage(self):
+    def test_get_storage_alias(self):
         for vm_name in self.vms.inventory.iterkeys():
-            self.assertRegexpMatches(self.vms.get_storage(vm_name), '\w+', msg=vm_name)
+            self.assertRegexpMatches(self.vms.get_storage_alias(vm_name), '\w+', msg=vm_name)
 
     def test_get_vmx_name(self):
         for vm_name in self.vms.inventory.iterkeys():
@@ -49,14 +49,14 @@ class VirtualMachinesTest(unittest.TestCase):
     def test_get_vm_path(self):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertEqual(self.vms.get_vm_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
-                            self.vms.get_storage(vm_name),
+                            self.vms.get_storage_alias(vm_name),
                             self.vms.get_directory(vm_name)),
                     msg=vm_name)
 
     def test_get_vmx_path(self):
         for vm_name in self.vms.inventory.iterkeys():
             self.assertEqual(self.vms.get_vmx_path(vm_name), '/vmfs/volumes/{0}/{1}'.format(
-                            self.vms.get_storage(vm_name),
+                            self.vms.get_storage_alias(vm_name),
                             self.vms.get_file(vm_name)),
                     msg=vm_name)
     
