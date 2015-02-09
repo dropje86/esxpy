@@ -16,3 +16,7 @@ class ESXiCommands(object):
     def raw_vmdk_output(self, vmx):
         cmd = "egrep '\\.vmdk\"$' {0}".format(vmx)
         return self._run(cmd)
+
+    def raw_datastores_list(self):
+        cmd = "vim-cmd hostsvc/datastore/listsummary"
+        return self._run(cmd)
